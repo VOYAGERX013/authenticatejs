@@ -1,20 +1,20 @@
 {
   "name": "authenticatejs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "AuthenticateJs helps simplify your authentication system using node js. You can easily login, register and logout your users with easy-to-call functions! Now, you do not need to deal with the hassle of cookies when authenticating your user. Use AuthenticateJs now!",
   "keywords": [
-      "authentication",
-      "login",
-      "register",
-      "cookies"
+    "authentication",
+    "login",
+    "register",
+    "cookies"
   ],
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-      "type": "git",
-      "url": "git+https://github.com/VOYAGERX013/authenticatejs.git"
+    "type": "git",
+    "url": "git+https://github.com/VOYAGERX013/authenticatejs.git"
   },
   "author": "Aryaan Hegde",
   "license": "MIT",
