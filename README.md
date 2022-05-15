@@ -86,21 +86,22 @@ If you want to login a user, you can use the login function. The first parameter
 
 ```javascript
 app.post("/login", async (req, res) => {
-    const login = await auth.login(res, User, req.body.email, req.body.password, "email", "password");
+    const login = await auth.login(res, User, "secret", req.body.email, req.body.password, "email", "password");
     if (login.success){
         res.send("Logged in!");
     } else{
         res.send("Not logged in!");
     }
 })
-
 ```
 
-If you have a certain page that should be accessed only by users who are logged in, you can do this check by using the isLoggedIn function:
+The string "secret" that you pass to the login function is used to sign json web tokens. Make sure it is stored as an environment variable for security purposes. Even if you do not pass the secret, authenticationjs uses a default string. But this is not a good practice as it makes your authentication system weak in terms of security.
+
+If you have a certain page that should be accessed only by users who are logged in, you can do this check by using the isLoggedIn function. For this function you must again pass the same secret string you passed for the login function:
 
 ```javascript
 app.get("/", (req, res) => {
-    if (auth.isLoggedIn(req)){
+    if (auth.isLoggedIn(req, "secret")){
         res.send("Hello User");
     } else{
         res.redirect("/login");
@@ -113,8 +114,8 @@ In order to retrieve the email of our user, we can use the getUserData function:
 
 ```javascript
 app.get("/", (req, res) => {
-    if (auth.isLoggedIn(req)){
-        const username = auth.getUserData(req, "email");
+    if (auth.isLoggedIn(req, "secret")){
+        const username = auth.getUserData(req, "email", "secret");
         res.send(`Hello ${username}!`);
     }
 })

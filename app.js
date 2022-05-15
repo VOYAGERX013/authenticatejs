@@ -2,14 +2,13 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 
-require("dotenv").config();
-
 const initialize = (app) => {
     app.use(cookieParser());
 }
 
-const login = async (res, Model, username_val, password_val, username_field, password_field) => {
+const login = async (res, Model, secret_val, username_val, password_val, username_field, password_field) => {
     let queryFields = {};
+    if (!secret_val) secret_val = "secret";
     if (!username_field) username_field = "username";
     if (!password_field) password_field = "password";
     queryFields[username_field] = username_val;
@@ -20,7 +19,7 @@ const login = async (res, Model, username_val, password_val, username_field, pas
             let signObject = {};
             signObject[username_field] = username_val;
             signObject[password_field] = password_val;
-            const token = jwt.sign(signObject, process.env.SECRET);
+            const token = jwt.sign(signObject, secret_val);
             res.cookie("token", token);
             return {success: true};
         } else{
@@ -59,12 +58,13 @@ const register = async (Model, username_val, password_val, username_field, passw
     }
 }
 
-const isLoggedIn = (req) => {
+const isLoggedIn = (req, secret_val) => {
     console.log(req.cookies);
+    if (!secret_val) secret_val = "secret";
     if (req.cookies){
         const tokenVal = req.cookies.token;
         if (tokenVal){
-            const verified = jwt.verify(tokenVal, process.env.SECRET);
+            const verified = jwt.verify(tokenVal, secret_val);
             if (verified){
                 return true;
             } else{
@@ -78,11 +78,12 @@ const isLoggedIn = (req) => {
     }
 }
 
-const getUserData = (req, field) => {
+const getUserData = (req, field, secret_val) => {
     if (!field) field = "username";
+    if (!secret_val) secret_val = "secret";
     const tokenVal = req.cookies.token;
     if (tokenVal){
-        const username = jwt.verify(tokenVal, process.env.SECRET)[field];
+        const username = jwt.verify(tokenVal, secret_val)[field];
         if (username){
             return username;
         } else{
