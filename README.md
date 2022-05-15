@@ -149,3 +149,7 @@ if (login.success){
     res.send(`The following error has occurred: ${errorMsg}`);
 }
 ```
+
+## Authors
+
+- [@aryaanhegde](https://www.github.com/VOYAGERX013)
