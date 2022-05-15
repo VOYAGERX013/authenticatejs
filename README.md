@@ -95,7 +95,7 @@ app.post("/login", async (req, res) => {
 })
 ```
 
-The string "secret" that you pass to the login function is used to sign json web tokens. Make sure it is stored as an environment variable for security purposes. Even if you do not pass the secret, authenticationjs uses a default string. But this is not a good practice as it makes your authentication system weak in terms of security.
+The string "secret" that you pass to the login function is used to sign json web tokens. Make sure it is stored as an environment variable for security purposes.
 
 If you have a certain page that should be accessed only by users who are logged in, you can do this check by using the isLoggedIn function. For this function you must again pass the same secret string you passed for the login function:
 
