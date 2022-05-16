@@ -115,13 +115,13 @@ In order to retrieve the email of our user, we can use the getUserData function:
 ```javascript
 app.get("/", (req, res) => {
     if (auth.isLoggedIn(req, "secret")){
-        const username = auth.getUserData(req, "email", "secret");
+        const username = auth.getUsername(req, "email", "secret");
         res.send(`Hello ${username}!`);
     }
 })
 ```
 
-The parameter we have passed in the getUserData function is the field name we want to access
+The parameter we have passed in the getUserData function is the field name we used for the username (in our case, email)
 
 You can make the user logout as well:
 

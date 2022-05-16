@@ -47,7 +47,7 @@ const register = async (Model, username_val, password_val, username_field, passw
         modelProps[password_field] = await bcrypt.hash(password_val, salt);
         if (additional_details){
             additional_details.map((elem) => {
-                modelProps[elem[0]] = modelProps[elem[1]];
+                modelProps[elem[0]] = elem[1];
             });    
         }
         const newUser = new Model(modelProps);
@@ -78,7 +78,7 @@ const isLoggedIn = (req, secret_val) => {
     }
 }
 
-const getUserData = (req, field, secret_val) => {
+const getUsername = (req, field, secret_val) => {
     if (!field) field = "username";
     if (!secret_val) secret_val = "secret";
     const tokenVal = req.cookies.token;
@@ -98,5 +98,5 @@ module.exports.login = login;
 module.exports.register = register;
 module.exports.logout = logout;
 module.exports.isLoggedIn =isLoggedIn;
-module.exports.getUserData = getUserData;
+module.exports.getUsername = getUsername;
 module.exports.initialize = initialize;
